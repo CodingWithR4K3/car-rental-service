@@ -18,7 +18,7 @@ jobs: # a collection of steps
           password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
         environment:
           MYSQL_ROOT_PASSWORD: rootpw
-          MYSQL_DATABASE: car_rental_service 
+          MYSQL_DATABASE: kodila_final_project
           MYSQL_USER: project_user
           MYSQL_PASSWORD: project_password
     steps: # a collection of executable commands
