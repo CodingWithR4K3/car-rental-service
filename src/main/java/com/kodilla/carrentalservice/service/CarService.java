@@ -30,8 +30,8 @@ public class CarService {
         return carMapper.mapToCarDtoList(carRepository.findAllByBrand(brand));
     }
 
-    public List<CarDto> getCarsByProductionYear(int years) {
-        return carMapper.mapToCarDtoList(carRepository.findAllByProductionYear(years));
+    public List<CarDto> getCarsByProductionYear(int year) {
+        return carMapper.mapToCarDtoList(carRepository.findAllByProductionYear(year));
     }
 
     public List<CarDto> getCarsByChassisType(String chassisType) {

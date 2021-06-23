@@ -28,9 +28,39 @@ public class CarController {
         return carService.getCarById(id);
     }
 
-    @GetMapping(value = "/ByBrand{brand}")
+    @GetMapping(value = "by_vim{vin}")
+    public CarDto getCarByVin(@PathVariable String vin) throws CarNotFoundException {
+        return carService.getCarByVin(vin);
+    }
+
+    @GetMapping(value = "/by_brand{brand}")
     public List<CarDto> getCarByBrand(@PathVariable String brand) {
         return carService.getCarsByBrand(brand);
+    }
+
+    @GetMapping(value = "by_year{year}")
+    public List<CarDto> getCarsByProductionYear(@PathVariable int year) {
+        return carService.getCarsByProductionYear(year);
+    }
+
+    @GetMapping(value = "by_chassis{chassis}")
+    public List<CarDto> getCarsByChassisType(@PathVariable String chassis) {
+        return carService.getCarsByChassisType(chassis);
+    }
+
+    @GetMapping(value = "by_fuel{fuelType}")
+    public List<CarDto> getCarsByFuelType(@PathVariable String fuelType) {
+        return carService.getCarsByFuelType(fuelType);
+    }
+
+    @GetMapping(value = "by_mileage{mileage}")
+    public List<CarDto> getCarsByMileage(@PathVariable int mileage) {
+        return carService.getCarsByMileage(mileage);
+    }
+
+    @GetMapping(value = "by_cost{cost}")
+    public List<CarDto> getCarsByCostPerDay(@PathVariable double cost) {
+        return carService.getCarsByCostPerDay(cost);
     }
 
     @PostMapping
@@ -39,7 +69,7 @@ public class CarController {
     }
 
     @PutMapping
-    public void modifyCar(@RequestBody CarDto carDto) {
+    public void updateCar(@RequestBody CarDto carDto) {
         carService.saveCar(carDto);
     }
 
