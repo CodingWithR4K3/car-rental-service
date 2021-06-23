@@ -11,6 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CarDto {
+    private Long id;
     private String vin;
     private int productionYear;
     private String brand;
