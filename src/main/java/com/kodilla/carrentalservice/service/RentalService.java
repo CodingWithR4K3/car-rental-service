@@ -15,7 +15,10 @@ import com.kodilla.carrentalservice.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
+
+import static java.time.temporal.ChronoUnit.DAYS;
 
 @Transactional
 @Service
@@ -52,7 +55,41 @@ public class RentalService {
         return rentalMapper.mapToRentalDto(rentalRepository.save(rental));
     }
 
-    public void deleteRental(final Long id) throws RentalNotFoundException {
+    public Rental updateRental(RentalDto rentalDto) throws UserNotFoundException, CarNotFoundException, RentalNotFoundException {
+        User user = userRepository.findById(rentalDto.getUserId()).orElseThrow(UserNotFoundException::new);
+        Car car = carRepository.findById(rentalDto.getCarId()).orElseThrow(CarNotFoundException::new);
+        Rental rental = rentalRepository.findById(rentalDto.getId()).orElseThrow(RentalNotFoundException::new);
+
+        rental.setUser(user);
+        rental.setCar(car);
+        rental.setRentedFrom(rentalDto.getRentedFrom());
+        rental.setRentedTo(rentalDto.getRentedTo());
+        updateDuration(rental);
+        updateCost(rental);
+
+        return rental;
+    }
+
+    public void closeRental(Long id) throws RentalNotFoundException {
         Rental rental = rentalRepository.findById(id).orElseThrow(RentalNotFoundException::new);
+
+        rental.getUser().getRentals().remove(rental);
+        rental.getCar().getRentals().remove(rental);
+        rental.getCar().setStatus(Status.AVAILABLE);
+
+        rentalRepository.deleteById(id);
+    }
+
+    public void updateDuration(Rental rental) {
+        if (rental.getRentedTo().isAfter(rental.getRentedFrom())) {
+            rental.setDuration(DAYS.between(rental.getRentedFrom(), rental.getRentedTo()));
+        } else {
+            rental.setDuration(0L);
+        }
+    }
+
+    public void updateCost(Rental rental) {
+        BigDecimal updatedCost = rental.getCar().getCostPerDay().multiply(new BigDecimal(rental.getDuration()));
+        rental.setCost(updatedCost);
     }
 }
