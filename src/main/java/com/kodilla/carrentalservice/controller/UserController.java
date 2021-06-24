@@ -23,32 +23,32 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping("/{id}")
     public UserDto getUserById(@PathVariable Long id) throws UserNotFoundException {
         return userService.getUserById(id);
     }
 
-    @GetMapping(value = "/by_email/{email}")
+    @GetMapping("/by_email/{email}")
     public UserDto getUserByEmail(@PathVariable String email) throws UserNotFoundException {
         return userService.getUserByEmail(email);
     }
 
-    @GetMapping(value = "/by_phone/{number}")
+    @GetMapping("/by_phone/{number}")
     public UserDto getUserByPhone(@PathVariable int number) throws UserNotFoundException {
         return userService.getUserByPhoneNumber(number);
     }
 
     @PostMapping
-    public void createUser(@RequestBody UserDto userDto) {
-        userService.saveUser(userDto);
+    public UserDto createUser(@RequestBody UserDto userDto) {
+        return userService.saveUser(userDto);
     }
 
     @PutMapping
-    public void updateUser(@RequestBody UserDto userDto) {
-        userService.saveUser(userDto);
+    public UserDto updateUser(@RequestBody UserDto userDto) {
+        return userService.saveUser(userDto);
     }
 
-    @DeleteMapping(value = "/{id}")
+    @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
     }

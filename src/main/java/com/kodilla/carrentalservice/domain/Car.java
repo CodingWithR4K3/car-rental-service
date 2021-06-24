@@ -7,6 +7,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -17,7 +20,6 @@ import javax.validation.constraints.NotNull;
 public class Car {
 
     @Id
-    @NotNull
     @GeneratedValue
     @Column(name = "ID", unique = true)
     private Long id;
@@ -56,9 +58,29 @@ public class Car {
 
     @NotNull
     @Column(name = "COST_PER_DAY")
-    private double costPerDay;
+    private BigDecimal costPerDay;
 
-    @NotNull
+    @Enumerated
     @Column(name = "STATUS")
     private Status status;
+
+    @OneToMany(targetEntity = Rental.class,
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER,
+            mappedBy = "car")
+    private List<Rental> rentals = new ArrayList<>();
+
+    public Car(Long id, String vin, int productionYear, String brand, String model, int mileage, String chassisType, String fuelType, double engineCapacity, BigDecimal costPerDay) {
+        this.id = id;
+        this.vin = vin;
+        this.productionYear = productionYear;
+        this.brand = brand;
+        this.model = model;
+        this.mileage = mileage;
+        this.chassisType = chassisType;
+        this.fuelType = fuelType;
+        this.engineCapacity = engineCapacity;
+        this.costPerDay = costPerDay;
+        this.status = Status.AVAILABLE;
+    }
 }

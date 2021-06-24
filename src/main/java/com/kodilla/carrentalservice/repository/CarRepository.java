@@ -3,8 +3,9 @@ package com.kodilla.carrentalservice.repository;
 import com.kodilla.carrentalservice.domain.Car;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,7 +26,7 @@ public interface CarRepository extends CrudRepository<Car, Long> {
 
     List<Car> findAllByMileage(int mileage);
 
-    List<Car> findAllByCostPerDay(double cost);
+    List<Car> findAllByCostPerDay(BigDecimal cost);
 
 
     Optional<Car> findByVin(String vin);

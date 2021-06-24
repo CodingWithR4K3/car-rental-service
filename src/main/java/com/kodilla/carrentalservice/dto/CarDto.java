@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -20,6 +22,6 @@ public class CarDto {
     private String chassisType;
     private String fuelType;
     private double engineCapacity;
-    private double costPerDay;
+    private BigDecimal costPerDay;
     private Status status;
 }

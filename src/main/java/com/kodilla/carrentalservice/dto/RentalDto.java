@@ -11,13 +11,11 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDto {
+public class RentalDto {
 
     private Long id;
-    private String name;
-    private String lastName;
-    private String email;
-    private String password;
-    private int phoneNumber;
-    private LocalDate creationDate;
+    private LocalDate rentedFrom;
+    private LocalDate rentedTo;
+    private Long carId;
+    private Long userId;
 }
