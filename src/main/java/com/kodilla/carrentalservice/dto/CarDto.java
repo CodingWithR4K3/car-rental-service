@@ -2,16 +2,15 @@ package com.kodilla.carrentalservice.dto;
 
 import com.kodilla.carrentalservice.domain.Status;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Builder;
+import lombok.Data;
 
 import java.math.BigDecimal;
 
-@Getter
-@Setter
+
+@Data
+@Builder
 @AllArgsConstructor
-@NoArgsConstructor
 public class CarDto {
     private Long id;
     private String vin;

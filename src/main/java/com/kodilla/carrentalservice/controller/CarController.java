@@ -1,5 +1,6 @@
 package com.kodilla.carrentalservice.controller;
 
+import com.kodilla.carrentalservice.domain.Car;
 import com.kodilla.carrentalservice.dto.CarDto;
 import com.kodilla.carrentalservice.exception.CarNotFoundException;
 import com.kodilla.carrentalservice.service.CarService;
@@ -20,8 +21,8 @@ public class CarController {
     }
 
     @GetMapping
-    public List<CarDto> getAllCars() {
-        return carService.getCars();
+    public Iterable<Car> getAllCars(@RequestParam(value = "isDeleted", required = false, defaultValue = "false") boolean isDeleted) {
+        return carService.findAll(isDeleted);
     }
 
     @GetMapping("/{id}")
@@ -29,37 +30,37 @@ public class CarController {
         return carService.getCarById(id);
     }
 
-    @GetMapping("by_vim{vin}")
+    @GetMapping("/by_vin/{vin}")
     public CarDto getCarByVin(@PathVariable String vin) throws CarNotFoundException {
         return carService.getCarByVin(vin);
     }
 
-    @GetMapping("/by_brand{brand}")
+    @GetMapping("/by_brand/{brand}")
     public List<CarDto> getCarByBrand(@PathVariable String brand) {
         return carService.getCarsByBrand(brand);
     }
 
-    @GetMapping("by_year{year}")
+    @GetMapping("/by_year/{year}")
     public List<CarDto> getCarsByProductionYear(@PathVariable int year) {
         return carService.getCarsByProductionYear(year);
     }
 
-    @GetMapping("by_chassis{chassis}")
+    @GetMapping("/by_chassis/{chassis}")
     public List<CarDto> getCarsByChassisType(@PathVariable String chassis) {
         return carService.getCarsByChassisType(chassis);
     }
 
-    @GetMapping("by_fuel{fuelType}")
+    @GetMapping("/by_fuel/{fuelType}")
     public List<CarDto> getCarsByFuelType(@PathVariable String fuelType) {
         return carService.getCarsByFuelType(fuelType);
     }
 
-    @GetMapping("by_mileage{mileage}")
+    @GetMapping("/by_mileage/{mileage}")
     public List<CarDto> getCarsByMileage(@PathVariable int mileage) {
         return carService.getCarsByMileage(mileage);
     }
 
-    @GetMapping("by_cost{cost}")
+    @GetMapping("/by_cost/{cost}")
     public List<CarDto> getCarsByCostPerDay(@PathVariable BigDecimal cost) {
         return carService.getCarsByCostPerDay(cost);
     }

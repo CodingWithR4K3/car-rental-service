@@ -1,9 +1,10 @@
 package com.kodilla.carrentalservice.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.FilterDef;
+import org.hibernate.annotations.ParamDef;
+import org.hibernate.annotations.SQLDelete;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -15,8 +16,12 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
-@Table(name = "CARS")
+@Table(name = "cars")
+@SQLDelete(sql = "UPDATE cars SET deleted = true WHERE id=?")
+@FilterDef(name = "deletedCarFilter", parameters = @ParamDef(name = "isDeleted", type = "boolean"))
+@Filter(name = "deletedCarFilter", condition = "deleted = :isDeleted")
 public class Car {
 
     @Id
@@ -69,6 +74,8 @@ public class Car {
             fetch = FetchType.EAGER,
             mappedBy = "car")
     private List<Rental> rentals = new ArrayList<>();
+
+    private boolean deleted;
 
     public Car(Long id, String vin, int productionYear, String brand, String model, int mileage, String chassisType, String fuelType, double engineCapacity, BigDecimal costPerDay) {
         this.id = id;

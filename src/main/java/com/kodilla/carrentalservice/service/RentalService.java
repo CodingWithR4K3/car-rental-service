@@ -12,11 +12,12 @@ import com.kodilla.carrentalservice.mapper.RentalMapper;
 import com.kodilla.carrentalservice.repository.CarRepository;
 import com.kodilla.carrentalservice.repository.RentalRepository;
 import com.kodilla.carrentalservice.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Transactional
 @Service
 public class RentalService {
 
@@ -25,7 +26,7 @@ public class RentalService {
     private final UserRepository userRepository;
     private final CarRepository carRepository;
 
-    @Autowired
+
     public RentalService(RentalMapper rentalMapper, RentalRepository rentalRepository, UserRepository userRepository, CarRepository carRepository) {
         this.rentalMapper = rentalMapper;
         this.rentalRepository = rentalRepository;

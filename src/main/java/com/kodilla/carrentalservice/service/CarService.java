@@ -1,25 +1,32 @@
 package com.kodilla.carrentalservice.service;
 
+import com.kodilla.carrentalservice.domain.Car;
 import com.kodilla.carrentalservice.dto.CarDto;
 import com.kodilla.carrentalservice.exception.CarNotFoundException;
 import com.kodilla.carrentalservice.mapper.CarMapper;
 import com.kodilla.carrentalservice.repository.CarRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.hibernate.Filter;
+import org.hibernate.Session;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
 import java.math.BigDecimal;
 import java.util.List;
 
+@Transactional
 @Service
 public class CarService {
 
+    private final EntityManager entityManager;
     private final CarRepository carRepository;
     private final CarMapper carMapper;
 
-    @Autowired
-    public CarService(CarRepository carRepository, CarMapper carMapper) {
+
+    public CarService(CarRepository carRepository, CarMapper carMapper, EntityManager entityManager) {
         this.carRepository = carRepository;
         this.carMapper = carMapper;
+        this.entityManager = entityManager;
     }
 
     public List<CarDto> getCars() {
@@ -65,6 +72,16 @@ public class CarService {
 
     public void deleteCar(final Long id) {
         carRepository.deleteById(id);
+    }
+
+    public Iterable<Car> findAll(boolean isDeleted) {
+        Session session = entityManager.unwrap(Session.class);
+        Filter filter = session.enableFilter("deletedCarFilter");
+        filter.setParameter("isDeleted", isDeleted);
+        Iterable<Car> cars = carRepository.findAll();
+        session.disableFilter("deletedCarFilter");
+        return cars;
+
     }
 
 }

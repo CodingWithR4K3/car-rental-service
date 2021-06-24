@@ -11,6 +11,7 @@ import java.util.List;
 public interface CarMapper {
 
     @Mapping(target = "rentals", ignore = true)
+    @Mapping(target = "deleted", ignore = true)
     Car mapToCar(final CarDto carDto);
 
     CarDto mapToCarDto(final Car car);

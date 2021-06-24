@@ -4,18 +4,19 @@ import com.kodilla.carrentalservice.dto.UserDto;
 import com.kodilla.carrentalservice.exception.UserNotFoundException;
 import com.kodilla.carrentalservice.mapper.UserMapper;
 import com.kodilla.carrentalservice.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Transactional
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
-    @Autowired
+
     public UserService(UserRepository userRepository, UserMapper userMapper) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
