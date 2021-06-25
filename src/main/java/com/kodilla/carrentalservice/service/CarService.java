@@ -5,8 +5,6 @@ import com.kodilla.carrentalservice.dto.CarDto;
 import com.kodilla.carrentalservice.exception.CarNotFoundException;
 import com.kodilla.carrentalservice.mapper.CarMapper;
 import com.kodilla.carrentalservice.repository.CarRepository;
-import org.hibernate.Filter;
-import org.hibernate.Session;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,59 +27,49 @@ public class CarService {
         this.entityManager = entityManager;
     }
 
-    public List<CarDto> getCars() {
-        return carMapper.mapToCarDtoList(carRepository.findAll());
+    public List<Car> getCars() {
+        return carRepository.findAll();
     }
 
-    public List<CarDto> getCarsByBrand(final String brand) {
-        return carMapper.mapToCarDtoList(carRepository.findAllByBrand(brand));
+    public List<Car> getCarsByBrand(final String brand) {
+        return carRepository.findAllByBrand(brand);
     }
 
-    public List<CarDto> getCarsByProductionYear(final int year) {
-        return carMapper.mapToCarDtoList(carRepository.findAllByProductionYear(year));
+    public List<Car> getCarsByProductionYear(final int year) {
+        return carRepository.findAllByProductionYear(year);
     }
 
-    public List<CarDto> getCarsByChassisType(final String chassisType) {
-        return carMapper.mapToCarDtoList(carRepository.findAllByChassisType(chassisType));
+    public List<Car> getCarsByChassisType(final String chassisType) {
+        return carRepository.findAllByChassisType(chassisType);
     }
 
-    public List<CarDto> getCarsByFuelType(final String fuelType) {
-        return carMapper.mapToCarDtoList(carRepository.findAllByFuelType(fuelType));
+    public List<Car> getCarsByFuelType(final String fuelType) {
+        return carRepository.findAllByFuelType(fuelType);
     }
 
-    public List<CarDto> getCarsByMileage(final int mileage) {
-        return carMapper.mapToCarDtoList(carRepository.findAllByMileage(mileage));
+    public List<Car> getCarsByMileage(final int mileage) {
+        return carRepository.findAllByMileage(mileage);
     }
 
-    public List<CarDto> getCarsByCostPerDay(final BigDecimal cost) {
-        return carMapper.mapToCarDtoList(carRepository.findAllByCostPerDay(cost));
+    public List<Car> getCarsByCostPerDay(final BigDecimal cost) {
+        return carRepository.findAllByCostPerDay(cost);
     }
 
-    public CarDto getCarById(final Long id) throws CarNotFoundException {
-        return carMapper.mapToCarDto(carRepository.findById(id).orElseThrow(CarNotFoundException::new));
+    public Car getCarById(final Long id) throws CarNotFoundException {
+        return carRepository.findById(id).orElseThrow(CarNotFoundException::new);
     }
 
-    public CarDto getCarByVin(final String vin) throws CarNotFoundException {
-        return carMapper.mapToCarDto(carRepository.findByVin(vin).orElseThrow(CarNotFoundException::new));
+    public Car getCarByVin(final String vin) throws CarNotFoundException {
+        return carRepository.findByVin(vin).orElseThrow(CarNotFoundException::new);
     }
 
 
-    public CarDto saveCar(final CarDto carDto) {
-        return carMapper.mapToCarDto(carRepository.save(carMapper.mapToCar(carDto)));
+    public Car saveCar(final CarDto carDto) {
+        return carRepository.save(carMapper.mapToCar(carDto));
     }
 
     public void deleteCar(final Long id) {
         carRepository.deleteById(id);
-    }
-
-    public Iterable<Car> findAll(boolean isDeleted) {
-        Session session = entityManager.unwrap(Session.class);
-        Filter filter = session.enableFilter("deletedCarFilter");
-        filter.setParameter("isDeleted", isDeleted);
-        Iterable<Car> cars = carRepository.findAll();
-        session.disableFilter("deletedCarFilter");
-        return cars;
-
     }
 
 }

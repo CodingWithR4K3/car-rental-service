@@ -37,22 +37,22 @@ public class RentalService {
         this.carRepository = carRepository;
     }
 
-    public List<RentalDto> getRentals() {
-        return rentalMapper.mapToRentalDtoList(rentalRepository.findAll());
+    public List<Rental> getRentals() {
+        return rentalRepository.findAll();
     }
 
-    public RentalDto getRentalById(final Long id) throws RentalNotFoundException {
-        return rentalMapper.mapToRentalDto(rentalRepository.findById(id).orElseThrow(RentalNotFoundException::new));
+    public Rental getRentalById(final Long id) throws RentalNotFoundException {
+        return rentalRepository.findById(id).orElseThrow(RentalNotFoundException::new);
     }
 
-    public RentalDto createRental(final RentalDto rentalDto) throws UserNotFoundException, CarNotFoundException {
+    public Rental createRental(final RentalDto rentalDto) throws UserNotFoundException, CarNotFoundException {
         User user = userRepository.findById(rentalDto.getUserId()).orElseThrow(UserNotFoundException::new);
         Car car = carRepository.findById(rentalDto.getCarId()).orElseThrow(CarNotFoundException::new);
         car.setStatus(Status.RENTED);
         carRepository.save(car);
 
         Rental rental = new Rental(rentalDto.getRentedFrom(), rentalDto.getRentedTo(), user, car);
-        return rentalMapper.mapToRentalDto(rentalRepository.save(rental));
+        return rentalRepository.save(rental);
     }
 
     public Rental updateRental(RentalDto rentalDto) throws UserNotFoundException, CarNotFoundException, RentalNotFoundException {

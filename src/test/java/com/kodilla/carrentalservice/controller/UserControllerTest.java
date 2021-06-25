@@ -1,7 +1,7 @@
 package com.kodilla.carrentalservice.controller;
 
 import com.kodilla.carrentalservice.dto.UserDto;
-import com.kodilla.carrentalservice.service.UserService;
+import com.kodilla.carrentalservice.facade.UserFacade;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,13 +31,13 @@ class UserControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private UserService userService;
+    private UserFacade userFacade;
 
     @Test
     public void shouldFetchUserById() throws Exception {
         //Given
         UserDto userDto = createSampleUser();
-        when(userService.getUserById(1L)).thenReturn(userDto);
+        when(userFacade.getUserById(1L)).thenReturn(userDto);
 
         //When & Then
         mockMvc.perform(get("/v1/users/1")
@@ -53,7 +53,7 @@ class UserControllerTest {
     public void shouldFetchUserByEmail() throws Exception {
         //Given
         UserDto userDto = createSampleUser();
-        when(userService.getUserByEmail("sampleEmail")).thenReturn(userDto);
+        when(userFacade.getUserByEmail("sampleEmail")).thenReturn(userDto);
 
         //When & Then
         mockMvc.perform(get("/v1/users/by_email/sampleEmail")
@@ -68,7 +68,7 @@ class UserControllerTest {
     public void shouldFetchUserByPhoneNumber() throws Exception {
         //Given
         UserDto userDto = createSampleUser();
-        when(userService.getUserByPhoneNumber(1234)).thenReturn(userDto);
+        when(userFacade.getUserByPhoneNumber(1234)).thenReturn(userDto);
 
         //When & Then
         mockMvc.perform(get("/v1/users/by_phone/1234")
@@ -84,7 +84,7 @@ class UserControllerTest {
         //Given
         UserDto userDto = createSampleUser();
         List<UserDto> userDtoList = Collections.singletonList(userDto);
-        when(userService.getAllUsers()).thenReturn(userDtoList);
+        when(userFacade.getAllUsers()).thenReturn(userDtoList);
 
         //When & Then
         mockMvc.perform(get("/v1/users")

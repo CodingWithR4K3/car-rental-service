@@ -1,7 +1,7 @@
 package com.kodilla.carrentalservice.controller;
 
 import com.kodilla.carrentalservice.dto.RentalWithCarDto;
-import com.kodilla.carrentalservice.service.RentalService;
+import com.kodilla.carrentalservice.facade.RentalFacade;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ class RentalControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private RentalService rentalService;
+    private RentalFacade rentalFacade;
 
 
     @Test
@@ -40,7 +40,7 @@ class RentalControllerTest {
         //Given
         RentalWithCarDto rentalWithCarDto = createSampleRental();
         List<RentalWithCarDto> rentalWithCarDtoList = Collections.singletonList(rentalWithCarDto);
-        doReturn(rentalWithCarDtoList).when(rentalService).getRentals();
+        doReturn(rentalWithCarDtoList).when(rentalFacade).getRentals();
         //When & Then
         mockMvc.perform(get("/v1/rentals")
                 .contentType(MediaType.APPLICATION_JSON))

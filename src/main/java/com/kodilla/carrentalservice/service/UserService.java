@@ -1,5 +1,6 @@
 package com.kodilla.carrentalservice.service;
 
+import com.kodilla.carrentalservice.domain.User;
 import com.kodilla.carrentalservice.dto.UserDto;
 import com.kodilla.carrentalservice.exception.UserNotFoundException;
 import com.kodilla.carrentalservice.mapper.UserMapper;
@@ -22,24 +23,24 @@ public class UserService {
         this.userMapper = userMapper;
     }
 
-    public List<UserDto> getAllUsers() {
-        return userMapper.mapToUserDtoList(userRepository.findAll());
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 
-    public UserDto getUserById(final Long id) throws UserNotFoundException {
-        return userMapper.mapToUserDto(userRepository.findById(id).orElseThrow(UserNotFoundException::new));
+    public User getUserById(final Long id) throws UserNotFoundException {
+        return userRepository.findById(id).orElseThrow(UserNotFoundException::new);
     }
 
-    public UserDto getUserByEmail(final String email) throws UserNotFoundException {
-        return userMapper.mapToUserDto(userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new));
+    public User getUserByEmail(final String email) throws UserNotFoundException {
+        return userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
     }
 
-    public UserDto getUserByPhoneNumber(final int phoneNumber) throws UserNotFoundException {
-        return userMapper.mapToUserDto(userRepository.findByPhoneNumber(phoneNumber).orElseThrow(UserNotFoundException::new));
+    public User getUserByPhoneNumber(final int phoneNumber) throws UserNotFoundException {
+        return userRepository.findByPhoneNumber(phoneNumber).orElseThrow(UserNotFoundException::new);
     }
 
-    public UserDto saveUser(final UserDto userDto) {
-        return userMapper.mapToUserDto(userRepository.save(userMapper.mapToUser(userDto)));
+    public User saveUser(final UserDto userDto) {
+        return userRepository.save(userMapper.mapToUser(userDto));
     }
 
     public void deleteUser(final Long id) {

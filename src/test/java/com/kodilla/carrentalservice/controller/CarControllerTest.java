@@ -3,7 +3,7 @@ package com.kodilla.carrentalservice.controller;
 import com.google.gson.Gson;
 import com.kodilla.carrentalservice.domain.Status;
 import com.kodilla.carrentalservice.dto.CarDto;
-import com.kodilla.carrentalservice.service.CarService;
+import com.kodilla.carrentalservice.facade.CarFacade;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatchers;
@@ -33,14 +33,14 @@ public class CarControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private CarService carService;
+    private CarFacade carFacade;
 
 
     @Test
     public void shouldFetchCarById() throws Exception {
         //Given
         CarDto carDto = createSampleCar();
-        when(carService.getCarById(1L)).thenReturn(carDto);
+        when(carFacade.getCarById(1L)).thenReturn(carDto);
 
         //When & Then
         mockMvc.perform(get("/v1/cars/1")
@@ -56,7 +56,7 @@ public class CarControllerTest {
     public void shouldFetchAllCars() throws Exception {
         //Given
         List<CarDto> carDtoList = createSampleCarList();
-        when(carService.getCars()).thenReturn(carDtoList);
+        when(carFacade.getCars()).thenReturn(carDtoList);
 
         //When & Then
         mockMvc.perform(get("/v1/cars")
@@ -68,7 +68,7 @@ public class CarControllerTest {
     public void shouldFetchAllCarsByBrand() throws Exception {
         //Given
         List<CarDto> carDtoList = createSampleCarList();
-        when(carService.getCarsByBrand("Ford")).thenReturn(carDtoList);
+        when(carFacade.getCarsByBrand("Ford")).thenReturn(carDtoList);
 
         //When & Then
         mockMvc.perform(get("/v1/cars/by_brand/Ford")
@@ -84,7 +84,7 @@ public class CarControllerTest {
     public void shouldFetchAllCarsByFuelType() throws Exception {
         //Given
         List<CarDto> carDtoList = createSampleCarList();
-        when(carService.getCarsByFuelType("Gasoline")).thenReturn(carDtoList);
+        when(carFacade.getCarsByFuelType("Gasoline")).thenReturn(carDtoList);
 
         //When & Then
         mockMvc.perform(get("/v1/cars/by_fuel/Gasoline")
@@ -100,7 +100,7 @@ public class CarControllerTest {
     public void shouldFetchCarsByChassisType() throws Exception {
         //Given
         List<CarDto> carDtoList = createSampleCarList();
-        when(carService.getCarsByChassisType("Hatchback")).thenReturn(carDtoList);
+        when(carFacade.getCarsByChassisType("Hatchback")).thenReturn(carDtoList);
 
         //When & Then
         mockMvc.perform(get("/v1/cars/by_chassis/Hatchback")
@@ -116,7 +116,7 @@ public class CarControllerTest {
     public void shouldFetchCarsByMileage() throws Exception {
         //Given
         List<CarDto> carDtoList = createSampleCarList();
-        when(carService.getCarsByMileage(1000)).thenReturn(carDtoList);
+        when(carFacade.getCarsByMileage(1000)).thenReturn(carDtoList);
 
         //When & Then
         mockMvc.perform(get("/v1/cars/by_mileage/1000")
@@ -133,7 +133,7 @@ public class CarControllerTest {
     public void shouldFetchCarsByCostPerDay() throws Exception {
         //Given
         List<CarDto> carDtoList = createSampleCarList();
-        when(carService.getCarsByCostPerDay(new BigDecimal("499.99"))).thenReturn(carDtoList);
+        when(carFacade.getCarsByCostPerDay(new BigDecimal("499.99"))).thenReturn(carDtoList);
 
         //When & Then
         mockMvc.perform(get("/v1/cars/by_cost/499.99")
@@ -150,7 +150,7 @@ public class CarControllerTest {
     public void shouldCreateCar() throws Exception {
         //Given
         CarDto carDto = createSampleCar();
-        when(carService.saveCar(ArgumentMatchers.any(CarDto.class))).thenReturn(carDto);
+        when(carFacade.saveCar(ArgumentMatchers.any(CarDto.class))).thenReturn(carDto);
 
         Gson gson = new Gson();
         String jsonContent = gson.toJson(carDto);
@@ -169,7 +169,7 @@ public class CarControllerTest {
     public void shouldUpdateCar() throws Exception {
         //Given
         CarDto carDto = createSampleCar();
-        when(carService.saveCar(ArgumentMatchers.any(CarDto.class))).thenReturn(carDto);
+        when(carFacade.saveCar(ArgumentMatchers.any(CarDto.class))).thenReturn(carDto);
 
         Gson gson = new Gson();
         String jsonContent = gson.toJson(carDto);
