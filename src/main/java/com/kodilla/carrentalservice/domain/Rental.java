@@ -17,7 +17,7 @@ import static java.time.temporal.ChronoUnit.DAYS;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "RENTALS")
+@Table(name = "rentals")
 public class Rental {
 
     @Id

@@ -12,6 +12,7 @@ public interface CarMapper {
 
     @Mapping(target = "rentals", ignore = true)
     @Mapping(target = "deleted", ignore = true)
+    @Mapping(target = "status", ignore = true)
     Car mapToCar(final CarDto carDto);
 
     CarDto mapToCarDto(final Car car);

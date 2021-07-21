@@ -3,12 +3,12 @@ package com.kodilla.carrentalservice.dto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-
-import java.time.LocalDate;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class UserDto {
 
     private Long id;
@@ -17,5 +17,4 @@ public class UserDto {
     private String email;
     private String password;
     private int phoneNumber;
-    private LocalDate creationDate;
 }

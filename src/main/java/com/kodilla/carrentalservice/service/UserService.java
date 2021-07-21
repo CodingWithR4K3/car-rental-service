@@ -43,6 +43,10 @@ public class UserService {
         return userRepository.save(userMapper.mapToUser(userDto));
     }
 
+    public Boolean isUserAlreadyRegistered(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
     public void deleteUser(final Long id) {
         userRepository.deleteById(id);
     }

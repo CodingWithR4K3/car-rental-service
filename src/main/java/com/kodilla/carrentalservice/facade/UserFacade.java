@@ -42,4 +42,8 @@ public class UserFacade {
     public void deleteUser(Long id) {
         userService.deleteUser(id);
     }
+
+    public Boolean isUserAlreadyRegistered(String email) {
+        return userService.isUserAlreadyRegistered(email);
+    }
 }

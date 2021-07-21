@@ -1,7 +1,6 @@
 package com.kodilla.carrentalservice.service;
 
 import com.kodilla.carrentalservice.domain.Car;
-import com.kodilla.carrentalservice.dto.CarDto;
 import com.kodilla.carrentalservice.exception.CarNotFoundException;
 import com.kodilla.carrentalservice.mapper.CarMapper;
 import com.kodilla.carrentalservice.repository.CarRepository;
@@ -64,8 +63,8 @@ public class CarService {
     }
 
 
-    public Car saveCar(final CarDto carDto) {
-        return carRepository.save(carMapper.mapToCar(carDto));
+    public Car saveCar(final Car car) {
+        return carRepository.save(car);
     }
 
     public void deleteCar(final Long id) {

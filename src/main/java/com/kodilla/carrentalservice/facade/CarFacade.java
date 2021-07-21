@@ -76,8 +76,8 @@ public class CarFacade {
 
     }
 
-    public CarDto saveCar(final CarDto carDto) {
-        return carMapper.mapToCarDto(carService.saveCar(carDto));
+    public CarDto saveCar(CarDto carDto) {
+        return carMapper.mapToCarDto(carService.saveCar(carMapper.mapToCar(carDto)));
     }
 
     public void deleteCar(final Long id) {

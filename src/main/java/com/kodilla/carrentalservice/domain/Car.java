@@ -67,7 +67,6 @@ public class Car {
     @Column(name = "COST_PER_DAY")
     private BigDecimal costPerDay;
 
-    @Enumerated
     @Column(name = "STATUS")
     private Status status;
 

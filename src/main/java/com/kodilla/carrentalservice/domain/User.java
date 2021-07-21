@@ -7,7 +7,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,11 +15,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "USERS")
+@Table(name = "users")
 public class User {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue()
     @Column(name = "ID", unique = true)
     private Long id;
 
@@ -44,8 +43,9 @@ public class User {
     @Column(name = "PHONE_NUMBER")
     private int phoneNumber;
 
-    @Column(name = "CREATION_DATE")
-    private LocalDate creationDate;
+    //@NotNull
+    //@Column(name = "CREATION_DATE")
+    //private LocalDate accountCreated;
 
     @OneToMany(targetEntity = Rental.class,
             cascade = CascadeType.ALL,
